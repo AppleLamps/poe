@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poe API Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="poe.svg" alt="Poe" class="logo-icon">
+                    <h1 class="logo-text">API Dashboard</h1>
+                </div>
+                <nav class="nav">
+                    <a href="#" class="nav-link">Docs</a>
+                    <a href="#" class="nav-link">Billing</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Usage Stats Overview -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Requests Today</h3>
+                            <p class="stat-number">152</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-month"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Requests This Month</h3>
+                            <p class="stat-number">2,800</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Points Used</h3>
+                            <p class="stat-number">1,266,763 / 2,500,000</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 50.7%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Quota Remaining</h3>
+                            <p class="stat-number">49.3%</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Usage Chart -->
+            <section class="chart-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>API Usage (Last 7 Days)</h2>
+                    </div>
+                    <div class="card-content">
+                        <canvas id="usageChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- API Keys Management -->
+            <section class="api-keys-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>API Keys</h2>
+                        <button class="btn btn-primary" id="createKeyBtn">
+                            <i class="fas fa-plus"></i> Create New Key
+                        </button>
+                    </div>
+                    <div class="card-content">
+                        <div class="api-keys-list" id="apiKeysList">
+                            <!-- API keys will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="activity-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Recent Activity</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="table-container">
+                            <table class="activity-table">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Endpoint</th>
+                                        <th>Status</th>
+                                        <th>Points</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="activityTableBody">
+                                    <!-- Activity data will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Code Samples -->
+            <section class="code-samples-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Code Samples</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="code-samples-grid">
+                            <div class="code-sample">
+                                <div class="code-header">
+                                    <h3>Python</h3>
+                                    <button class="btn btn-secondary copy-btn" data-target="pythonCode">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                                <pre><code id="pythonCode">import requests
+
+url = "https://api.poe.com/v1/chat/completions"
+headers = {
+    "Authorization": "Bearer YOUR_API_KEY",
+    "Content-Type": "application/json"
+}
+data = {
+    "model": "gpt-3.5-turbo",
+    "messages": [
+        {"role": "user", "content": "Hello, world!"}
+    ]
+}
+
+response = requests.post(url, headers=headers, json=data)
+print(response.json())</code></pre>
+                            </div>
+                            <div class="code-sample">
+                                <div class="code-header">
+                                    <h3>Node.js</h3>
+                                    <button class="btn btn-secondary copy-btn" data-target="nodejsCode">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                                <pre><code id="nodejsCode">const axios = require('axios');
+
+const url = 'https://api.poe.com/v1/chat/completions';
+const headers = {
+    'Authorization': 'Bearer YOUR_API_KEY',
+    'Content-Type': 'application/json'
+};
+const data = {
+    model: 'gpt-3.5-turbo',
+    messages: [
+        { role: 'user', content: 'Hello, world!' }
+    ]
+};
+
+axios.post(url, data, { headers })
+    .then(response => {
+        console.log(response.data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Create Key Modal -->
+    <div id="createKeyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New API Key</h3>
+                <button class="modal-close" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="keyName">Key Name</label>
+                    <input type="text" id="keyName" placeholder="Enter key name" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label for="keyPermissions">Permissions</label>
+                    <select id="keyPermissions" class="form-select">
+                        <option value="read">Read Only</option>
+                        <option value="write">Read & Write</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                <button class="btn btn-primary" id="confirmCreateBtn">Create Key</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="toastMessage">Action completed successfully!</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
